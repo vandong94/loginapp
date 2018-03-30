@@ -9,6 +9,7 @@ const callbackStyle = (req, res, next) => {
     let balanceUser = 0;
 
     user.isRegisteredBefore(emailuser, (err, data) => {
+
         if(err) throw err;
 
         balanceUser = data.balance;

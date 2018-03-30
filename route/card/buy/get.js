@@ -9,9 +9,9 @@ module.exports = (req, res) => {
             res.render("buy", {balance: balance});
         })
     }else{
+        res.redirect('/auth/login');
         res.cookie("email", "", {
             maxAge: 0
         });
     }
-    
 }
