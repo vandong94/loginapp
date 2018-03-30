@@ -6,19 +6,38 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Buy Page</title>
+
+    <script>
+        function validateBalance() {
+            var balance = document.getElementById("balance").value;
+            var buyValue = document.getElementById('buy').value;
+            if(balance < buyValue){
+                document.getElementById('errorBalance').innerHTML = "Your balance is not enough to buy more!";
+                return false;    
+            }
+        }
+    </script>
 </head>
+
 <body>
 
 <h2>This card buy page</h2>
 <p>Please choose your option!</p>
-<p>Your balance remain: </p>
+<p>Your balance remain: <%= balance %></p>
+<p id="errorBalance" style="color: red"></p>
 <form method="post">
+    <input id="balance" type="hidden" value="<%= balance %>">
     <select id="buy" name="buy">
         <option value="10">Mệnh giá 10.000</option>
         <option value="20">Mệnh giá 20.000</option>
         <option value="30">Mệnh giá 30.000</option>
     </select>
-    <input type="submit" value="Buy Now">
+    <input type="submit" value="Buy Now" onclick="return validateBalance()">
 </form>
+<br/>
+<a href="/auth/logout" style="margin-right: 15px">Sign-Out</a>
+
+<a href="/card/history">View Your History</a>
+
 </body>
 </html>

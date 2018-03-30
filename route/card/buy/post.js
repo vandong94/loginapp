@@ -1,42 +1,50 @@
-const {common, card} = require(PATH.CONTROL);
+const {common, card, user} = require(PATH.CONTROL);
+
+
 
 const callbackStyle = (req, res, next) => {
 
-    let {valuecard} = req.body.buy;
+    let emailuser = req.cookies.email;
 
-    let namecard = "";
+    let balanceUser = 0;
 
-    if(valuecard == 10){
-        namecard = "Mệnh giá 10.000";
-    }else if(valuecard == 20){
-        namecard = "Mệnh giá 20.000"
-    }else {
-        namecard = "Mệnh giá 30.000";
-    }
+    user.isRegisteredBefore(emailuser, (err, data) => {
+        if(err) throw err;
 
-    let balanceremain = 100 - req.body.buy;
+        balanceUser = data.balance;
+        let balanceremain = balanceUser - req.body.buy;
+        let valuecard = req.body.buy;
 
-    let emailuser = "dong@gmail.com";
+        let namecard = "";
 
-    console.log("valueCard: ", valuecard);
-    console.log("nameCard: ", namecard);
-    console.log("RemainBal: ", balanceremain);
-    console.log("EmailUser: ", emailuser);
+        if(valuecard == 10){
+            namecard = "Mệnh giá 10.000";
+        }else if(valuecard == 20){
+            namecard = "Mệnh giá 20.000"
+        }else {
+            namecard = "Mệnh giá 30.000";
+        }
 
-
-
-    card.createNewHistory({
-        emailuser,
-        namecard,
-        valuecard,
-        balanceremain
-    },(err, newHistory) => {
-        if(err) return next();
-        res.json({
-            success: true,
-            history_id: newHistory._id
+        user.updateBalance(emailuser, balanceremain, (err, success) => {
+            if(err) throw err;
         });
+
+        card.createNewHistory({
+            emailuser,
+            namecard,
+            valuecard,
+            balanceremain
+        },(err, newHistory) => {
+            if(err) return next();
+            res.redirect('/card/history');
+            // res.json({
+            //     success: true,
+            //     history_id: newHistory._id
+            // });
+        });
+        
     });
+    
 }
 module.exports = [
     common.expressParser.bodyParser,

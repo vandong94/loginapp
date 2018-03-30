@@ -7,7 +7,8 @@ const callbackStyle = (req, res, next) => {
         if (err) return next(err);
         if (foundUser != null) {
             res.cookie("email", foundUser.email, {
-                maxAge: 24 * 60 * 60 * 1000
+                maxAge: 24 * 60 * 60 * 1000,
+                httpOnly: false,
             });
             res.redirect("/card/buy");
         }

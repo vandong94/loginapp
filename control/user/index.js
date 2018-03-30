@@ -20,6 +20,7 @@ const updateBalance = (email, valueUpdate , callback) => {
     user.updateOne({email}, {$set: {balance: valueUpdate}}).exec(callback);
 }
 
+
 module.exports = {
     isRegisteredBefore,
     registerNewAccount,

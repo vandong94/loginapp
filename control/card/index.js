@@ -12,7 +12,13 @@ const createNewHistory = ({emailuser, namecard, valuecard, balanceremain}, callb
     }).save(callback);
 }
 
+
+const findAllHistory = (emailuser, callback) => {
+    card.find({emailuser}).exec(callback);
+}
+
 module.exports = {
     isRegisteredBefore,
-    createNewHistory
+    createNewHistory,
+    findAllHistory
 }
