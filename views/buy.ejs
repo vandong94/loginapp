@@ -8,14 +8,47 @@
     <title>Buy Page</title>
 
     <script>
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
         function validateBalance() {
             var balance = document.getElementById("balance").value;
             var buyValue = document.getElementById('buy').value;
+            
+            var get = getCookie('email');
+            if(get == null || get == ''){
+                document.getElementById('errorBalance').innerHTML = "Please login before buy continue!";
+                return false;
+            }
+            
             if(balance < buyValue){
                 document.getElementById('errorBalance').innerHTML = "Your balance is not enough to buy more!";
                 return false;    
             }
         }
+
+        function validateHistory(){
+            var get = getCookie('email');
+            if(get == null || get == ''){
+                document.getElementById('errViewHistory').innerHTML = "Please login before view your history!";
+                return false;
+            }
+        }
+        
     </script>
 </head>
 
@@ -37,7 +70,8 @@
 <br/>
 <a href="/auth/logout" style="margin-right: 15px">Sign-Out</a>
 
-<a href="/card/history">View Your History</a>
+<p style="color:red" id="errViewHistory"></p>
+<a href="/card/history" onclick="return validateHistory()">View Your History</a>
 
 </body>
 </html>

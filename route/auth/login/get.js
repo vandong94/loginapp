@@ -1,3 +1,4 @@
 module.exports = (req, res) => {
-    res.render('login');
+    var getMessage = req.query.message;
+    res.render('login', {mess: getMessage});
 }
