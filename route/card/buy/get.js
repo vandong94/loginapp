@@ -10,8 +10,5 @@ module.exports = (req, res) => {
         })
     }else{
         res.redirect('/auth/login');
-        res.cookie("email", "", {
-            maxAge: 0
-        });
     }
 }
