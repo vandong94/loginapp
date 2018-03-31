@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Buy Page</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
 
         function getCookie(cname) {
@@ -48,6 +48,14 @@
                 return false;
             }
         }
+
+        $(document).ready(function () {
+            $('#loginID').hide();
+            var get = getCookie('email');
+            if(get == null || get == ''){
+                $('#loginID').show();
+            }
+        });
         
     </script>
 </head>
@@ -72,6 +80,7 @@
 
 <p style="color:red" id="errViewHistory"></p>
 <a href="/card/history" onclick="return validateHistory()">View Your History</a>
-
+<br/><br/>
+<a href="/auth/login" id="loginID">Log-In</a>
 </body>
 </html>
