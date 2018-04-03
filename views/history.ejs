@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>History Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -17,7 +17,10 @@
       <tr>
         <th>Email</th>
         <th>Name Card</th>
-        <th>Value Card</th>
+        <th>Date Buy</th>
+        <th>Card Number</th>
+        <th>Date Use</th>
+        <th>Status Card</th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +28,10 @@
       <tr>
         <td><%= result.emailuser %></td>
         <td><%= result.namecard %></td>
-        <td><%= result.valuecard %></td>
+        <td><%= result.datebuy %></td>
+        <td><%= result.cardnumber%></td>
+        <td><%= result.dateuse %></td>
+        <td><%= result.statuscard == 0? 'Chưa sử dụng':'Đã sử dụng' %></td>
       </tr>
       <% })%>
     </tbody>

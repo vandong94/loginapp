@@ -4,5 +4,16 @@ const {Schema} = require("mongoose");
      emailuser: String,
      namecard: String,
      valuecard: Number,
-     balanceremain: Number
+     balanceremain: Number,
+     cardnumber: String,
+     numbercard: String,
+     statuscard: {
+         type: String,
+         default: 0
+     },
+     datebuy: {
+        type: Date,
+        default: Date.now
+    },
+    dateuse: Date,
  });
