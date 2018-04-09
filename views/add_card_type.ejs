@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Card Type Page</title>
+    <script src="/jquery.min.js"></script>
+    <script>
+        function validateNumber(){
+            var cardType = document.getElementById('cardType').value;
+            
+            if(cardType == 10000 || cardType == 20000 || cardType == 50000 || 
+            cardType == 100000 || cardType == 200000 || cardType == 500000 || cardType == ' '){
+                return true;
+            }else{
+                document.getElementById('errorCardType').innerHTML = "Card type is not exist. Please enter another card type!";
+                return false;
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+
+<p id="errorCardType" style="color: red"><%= message%></p>
+<form method="post" onsubmit="return validateNumber()">
+    <input type="number" placeholder="Please enter your card type" id="cardType" name="cardType" style=" width: 250px;
+    height: 25px;
+    border-radius: 5px;" required/>
+    <input type="submit" value="Add" style="border-radius: 2px; margin: 10px" >
+</form>
+<br/>
+<br/>
+<a href="/card/buy">Quay lại trang mua</a>
+</body>
+</html>

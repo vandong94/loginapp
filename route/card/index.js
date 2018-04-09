@@ -4,12 +4,14 @@ const history = require('./history');
 
 const buy = require('./buy');
 
-const addcard = require('./addcard');
+const add_balance = require('./add_balance');
+
 
 history(router);
 
 buy(router);
 
-addcard(router);
+add_balance(router);
+
 
 module.exports = router;

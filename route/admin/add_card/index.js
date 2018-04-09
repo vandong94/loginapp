@@ -3,6 +3,6 @@ const get = require('./get');
 const post = require('./post');
 
 module.exports = (router) => {
-    router.get('/addcard', get);
-    router.post.apply(router, ['/addcard', ...post]);
+    router.get('/add_card', get);
+    router.post('/add_card', post);
 }

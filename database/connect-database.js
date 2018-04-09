@@ -5,6 +5,10 @@ const {mongodbUriOption} = require(PATH.CONFIG);
 
 const mongodbUri = format(mongodbUriOption);
 
+/**
+ *
+ * @param callback
+ */
 const connectDatabase = (callback) => {
     let conn = mongoose.connect(mongodbUri);
     if (callback) {

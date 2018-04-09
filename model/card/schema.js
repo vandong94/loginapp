@@ -1,19 +1,22 @@
 const {Schema} = require("mongoose");
 
  module.exports = Schema({
-     emailuser: String,
-     namecard: String,
-     valuecard: Number,
-     balanceremain: Number,
-     cardnumber: String,
-     numbercard: String,
-     statuscard: {
-         type: String,
+     user_id: {
+         type: Schema.ObjectId,
+         ref: 'user'
+     },
+     type_id: {
+         type: Schema.ObjectId,
+         ref: 'card_type'
+     },
+     code: String,
+     status: {
+         type: Number,
          default: 0
      },
-     datebuy: {
-        type: Date,
-        default: Date.now
-    },
-    dateuse: Date,
+     created_at: {
+         type: Date,
+         default: Date.now
+     },
+     used_at: Date
  });

@@ -1,67 +1,29 @@
-const {common, card, user} = require(PATH.CONTROL);
+const {common, card, card_type} = require(PATH.CONTROL);
 
 const callbackStyle = (req, res, next) => {
-
-    let emailuser = req.cookies.email;
-    
-    user.isRegisteredBefore(emailuser, (err, data) => {
-        
-        if(err) throw err;
-
-        if(data != null){
-
-            let balanceUser = 0;
-            balanceUser = data.balance;
-            let balanceremain = balanceUser - req.body.buy;
-            let valuecard = req.body.buy;
-
-            var getMaxRandomInt = () => Math.floor(Number.MAX_SAFE_INTEGER * Math.random());
-
-            var getTypeCard = valuecard / 10;
-            
-            var cardnumber = 'Card' + getTypeCard + '-' + getMaxRandomInt();
-            
-            let splitted = cardnumber.split("-", 2);
-
-            var numbercard = splitted[1];
-
-            let namecard = "";
-
-            if(valuecard == 10){
-                namecard = "Mệnh giá 10.000";
-            }else if(valuecard == 20){
-                namecard = "Mệnh giá 20.000"
-            }else {
-                namecard = "Mệnh giá 30.000";
-            }
-
-            user.updateBalance(emailuser, balanceremain, (err, success) => {
-                if(err) throw err;
-            });
-
-            card.createNewHistory({
-                emailuser,
-                namecard,
-                valuecard,
-                balanceremain,
-                cardnumber,
-                numbercard
-            },(err, newHistory) => {
-                if(err) return next();
-                res.redirect('/card/history');
-                // res.json({
-                //     success: true,
-                //     history_id: newHistory._id
-                // });
-            });                         
+    let currentBalance = req.user.balance;
+    let type_id = req.body.selectCardType;
+    card_type.getCardByID(type_id, (err, valueCard) => {
+        if(currentBalance < 0 || currentBalance < valueCard.value){
+            var string = encodeURIComponent('Your balance is not enough to buy continue. Please add more.!');
+            res.redirect('/card/buy?message=' + string);
         }
         else{
-            res.redirect('/auth/login');
+            let code = card_type.generateCardCode();
+            let user_id = req.user._id;
+            card.createNewHistory({user_id, type_id, code}, (err, newHistory) => {
+                if(err) return next(err);
+                let value = valueCard.value;
+                req.user.balance = currentBalance - value;
+                req.user.save( (err) => {
+                    if(err) return next(err);
+                    res.redirect('/card/history');
+                });
+            });
         }
-        
     });
-    
 }
+
 module.exports = [
     common.expressParser.bodyParser,
     callbackStyle
